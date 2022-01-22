@@ -1,4 +1,6 @@
 LinkLuaModifier("modifier_item_friend_wand","lua_items/friend_wand/friend_wand_lua",LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_friend_wand_aura","lua_items/friend_wand/friend_wand_lua",LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_friend_wand_aura_buff","lua_items/friend_wand/friend_wand_lua",LUA_MODIFIER_MOTION_NONE)
 
 item_friend_wand_lua = class({})
 
@@ -37,12 +39,11 @@ end
 
 --INTRINSIC MODIFIER
 modifier_item_friend_wand = class({})
-function modifier_item_friend_wand:IsHidden()       return false end
-function modifier_item_friend_wand:IsPurgable()     return false end
+function modifier_item_friend_wand:IsHidden() return true end
+function modifier_item_friend_wand:IsPurgable() return false end
 function modifier_item_friend_wand:RemoveOnDeath()  return false end
-function modifier_item_friend_wand:IsBuff()         return true end
-function modifier_item_friend_wand:IsAura()         return true end
-function modifier_item_friend_wand:GetAttributes()  return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_friend_wand:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_item_friend_wand:DeclareFunctions()
   local funcs = {
     MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
@@ -50,10 +51,17 @@ function modifier_item_friend_wand:DeclareFunctions()
   return funcs
 end
 
-function modifier_item_friend_wand:GetAuraRadius()
-  return self:GetAbility():GetSpecialValueFor("aura_radius")
-end
-
 function modifier_item_friend_wand:GetModifierConstantHealthRegen()
   return self:GetAbility():GetSpecialValueFor("health_regen")
 end
+
+--Actual Aura
+modifier_item_friend_wand_aura = class({})
+function modifier_item_friend_wand:IsBuff() return true end
+function modifier_item_friend_wand:IsAura() return true end
+function modifier_item_friend_wand:GetAuraRadius() return self:GetAbility():GetSpecialValueFor("aura_radius") end
+
+--Aura Applied Modifier
+modifier_item_friend_wand_aura_buff = class({})
+function modifier_item_friend_wand_aura_buff:IsBuff() return true end
+function modifier_item_friend_wand_aura_buff:IsHidden() return false end
