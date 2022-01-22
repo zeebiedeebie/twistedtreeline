@@ -2,6 +2,10 @@ LinkLuaModifier("modifier_item_hawk_glove","lua_items/hawk_glove/hawk_glove", LU
 LinkLuaModifier("item_hawk_glove_tree","lua_items/hawk_glove/hawk_glove", LUA_MODIFIER_MOTION_NONE)
 if item_hawk_glove == nil then item_hawk_glove = class({}) end
 
+function item_hawk_glove:GetIntrinsicModifierName()
+  return "modifier_item_hawk_glove"
+end
+
 function item_hawk_glove:OnSpellStart()
   CreateModifierThinker(
     self:GetCaster(),
@@ -17,6 +21,8 @@ end
 if item_hawk_glove_tree == nil then item_hawk_glove_tree = class({}) end
 
 function item_hawk_glove_tree:GetEffectName()
+
+  --return "particles/great_particle/great_particle.vpcf"
   return "particles/items_fx/ironwood_tree.vpcf"
   --return "particles/econ/items/ogre_magi/ogre_magi_arcana/ogre_magi_arcana_stunned_bird.vpcf"
 end
@@ -32,7 +38,7 @@ function item_hawk_glove_tree:OnCreated(kv)
     EmitSoundOn("DOTA_Item.HealingSalve.Activate", self:GetParent())
 
     local pfx = ParticleManager:CreateParticleForTeam(
-      "particles/econ/items/juggernaut/bladekeeper_healing_ward/juggernaut_healing_ward_dc.vpcf",
+      "particles/best_particle/best_particle.vpcf",--"particles/econ/items/juggernaut/bladekeeper_healing_ward/juggernaut_healing_ward_dc.vpcf",
       PATTACH_ABSORIGIN,
       self:GetParent(),
       self:GetCaster():GetTeam()
@@ -81,3 +87,16 @@ end
 
 --Hawk Glove modifier
 modifier_item_hawk_glove = class({})
+
+function modifier_item_hawk_glove:IsHidden() return true end
+
+function modifier_item_hawk_glove:DeclareFunctions()
+  funcs = {
+    MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+  }
+  return funcs
+end
+
+function modifier_item_hawk_glove:GetModifierAttackSpeedBonus_Constant()
+  return self:GetAbility():GetSpecialValueFor("attack_speed")
+end

@@ -7,24 +7,24 @@
 		"ScriptFile" "lua_items/stinger/stinger.lua"
 		"ItemIsNeutralDrop" "1"
 		"Model"							"models/props_gameplay/neutral_box.vmdl"
-		
+
 		"AbilityType" "DOTA_ABILITY_TYPE_BASIC"
 		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType" "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"FightRecapLevel" "2"
-		
+
 		"AbilityManaCost" "25"
 		"AbilityCooldown" "25.0"
-		"AbilityCastRange" "300"
+		"AbilityCastRange" "400"
 		"AbilityCastPoint" "0.0"
-		
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type" "FIELD_INTEGER"
-				"bonus_all_stats" "3"
+				"bonus_all_stats" "5"
 			}
 			"02"
 			{
@@ -37,15 +37,15 @@
 				"charge_damage" "20"
 			}
 		}
-		
-		"AbilityTextureName" "item_dagon"
-		
+
+		"AbilityTextureName" "item_stinger"
+
 		"precache"
 		{
-			"particle" "particles/items_fx/dagon.vpcf"	
+			"particle" "particles/items_fx/dagon.vpcf"
 		}
 	}
-	
+
 	//Kinetic Shield
 	"item_kinetic_shield"
 	{
@@ -54,13 +54,13 @@
 		"ScriptFile" "lua_items/kinetic_shield/kinetic_shield.lua"
 		"ItemIsNeutralDrop" "1"
 		"Model"							"models/props_gameplay/neutral_box.vmdl"
-		
+
 		"AbilityType" "DOTA_ABILITY_TYPE_BASIC"
 		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		
+
 		"AbilityManaCost" "0"
 		"AbilityCooldown" "15.0"
-		
+
 		"AbilityTextureName" "item_gem"
 		"AbilitySpecial"
 		{
@@ -71,7 +71,7 @@
 			}
 		}
 	}
-	
+
 	//Lonely Whistle
 	"item_friend_wand_lua"
 	{
@@ -80,24 +80,24 @@
 		"ScriptFile" "lua_items/friend_wand/friend_wand_lua.lua"
 		"ItemIsNeutralDrop" "1"
 		"Model"							"models/props_gameplay/neutral_box.vmdl"
-		
+
 		"AbilityType" "DOTA_ABILITY_TYPE_BASIC"
 		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNEL"
-		
-		"AbilityManaCost" "50"
+
+		"AbilityManaCost" "0"
 		"AbilityCooldown" "15.0"
 		"AbilityChannelTime" ".9"
 		"AbilityCastPoint" "0.1"
-		
+
 		"AbilityTextureName" "item_friend_wand"
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type" "FIELD_FLOAT"
-				"summon_duration" "15.0"
+				"summon_duration" "35.0"
 			}
-			
+
 			"02"
 			{
 				"var_type" "FIELD_INTEGER"
@@ -120,35 +120,35 @@
 			}
 		}
 	}
-	
+
 	"item_friend_wand" //Broken: Does not give bounty or XP
 	{
 		"ID" "1100"
 		"BaseClass" "item_datadriven"
-		
+
 		"ItemIsNeutralDrop" "1"
 		"ItemKillable" "0"
 		"ItemSellable" "0"
 		"ItemPurchasable" "0"
 		"ItemDroppable" "1"
-		
+
 		"Model"							"models/props_gameplay/neutral_box.vmdl"
-		
+
 		//Ability
-		
+
 		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNEL"
 		"AbilityType" "DOTA_ABILITY_TYPE_BASIC"
-		
+
 		"AbilityCastAnimation" "ACT_DOTA_GENERIC_CHANNEL_1"
-		
+
 		"AbilityCooldown" "15.0"
 		"AbilityCastRange" "250"
 		"AbilityChannelTime" ".9"
 		"AbilityCastPoint" "0.1"
 		"AbilityManaCost" "45"
-		
+
 		"AbilityTextureName" "item_magic_stick"
-		
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -167,10 +167,10 @@
 				"aura_radius" "600"
 			}
 		}
-		
+
 		"OnChannelSucceeded"
 		{
-			
+
 			"SpawnUnit"
 			{
 				"UnitName"    "npc_dota_creature_vhoul_buddy"
@@ -188,15 +188,15 @@
 					}
 				}
 			}
-			
+
 			"FireSound"
 			{
 				"EffectName" "n_creep_Skeleton.Spawn"
 				"Target" "CASTER"
 			}
-		}	
+		}
 	}
-	
+
 	"item_tree_wall"
 	{
 		"ID" 					"1101"
@@ -212,11 +212,11 @@
  		"AbilityCastPoint" "0.0"
  		"AbilityCooldown" "10.0"
  		"AbilityManaCost" "50"
-		
+
 		//Item Qualities
 		"ItemIsNeutralDrop" "1"
 		"Model"					"models/props_gameplay/neutral_box.vmdl"
-		
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -232,7 +232,7 @@
 			"03"
 			{
 				"var_type" "FIELD_INTEGER"
-				"bonus_agility" "10"
+				"bonus_agility" "4"
 			}
 			"04"
 			{
@@ -241,14 +241,14 @@
 			}
 		}
  	}
-	
+
 	"item_sacrifice_ring"
 	{
 		"ID" "1102"
 		"BaseClass" "item_lua"
 		"ScriptFile" "lua_items/sacrifice_ring/sacrifice_ring.lua"
-		"AbilityTextureName" "item_ring_of_protection"
-		
+		"AbilityTextureName" "item_sacrifice_ring"
+
 		"precache"
 		{
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
@@ -260,23 +260,23 @@
 		"AbilityUnitTargetType" "DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags" "DOTA_UNIT_TARGET_FLAG_NOT_SUMMONED | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
 		"AbilityType" "DOTA_ABILITY_BASIC"
-		
+
 		//Casting
 		"AbilityCastRange" "500"
 		"AbilityCastPOint" "0.0"
 		"AbilityCooldown" "40.0"
 		"AbilityManaCost" "0"
-		
+
 		//Item Qualities
 		"ItemIsNeutralDrop" "1"
 		"Model" "models/props_gameplay/neutral_box.vmdl"
-		
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type" "FIELD_INTEGER"
-				"health_conversion" "55"
+				"health_conversion" "60"
 			}
 			"02"
 			{
@@ -286,37 +286,37 @@
 			"03"
 			{
 				"var_type" "FIELD_FLOAT"
-				"hp_regen" ".5"
+				"hp_regen" "2.5"
 			}
 		}
 	}
-	
+
 	"item_hawk_glove"
 	{
 		"ID" "1103"
 		"BaseClass" "item_lua"
 		"ScriptFile" "lua_items/hawk_glove/hawk_glove.lua"
-		"AbilityTextureName" "item_gloves_of_travel"
-		
+		"AbilityTextureName" "item_hawk_glove"
+
 		"precache"
 		{
 			"particle" "particles/econ/items/ogre_magi/ogre_magi_arcana/ogre_magi_arcana_stunned_bird.vpcf"
 		}
-		
+
 		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_CUSTOM"
 		"AbilityUnitTargetType" "DOTA_UNIT_TARGET_TREE"
 		"AbilityDuration" "20"
-		
+
 		"AbilityCastPoint" "0.0"
 		"AbilityCooldown" "45.0"
 		"AbilityManaCost" "0"
 		"AbilityCastRange" "400"
-		
+
 		//Item Qualities
 		"ItemIsNeutralDrop" "1"
 		"Model" "models/props_gameplay/neutral_box.vmdl"
-		
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -336,41 +336,41 @@
 			}
 		}
 	}
-	
+
 	"item_smudged_scroll"
 	{
 		"ID" "1104"
 		"BaseClass" "item_lua"
 		"ScriptFile" "lua_items/smudged_scroll/smudged_scroll.lua"
-		"AbilityTextureName" "item_scroll"
-		
+		"AbilityTextureName" "item_smudged_scroll"
+
 		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		
+
 		"AbilityCastPoint" "0.0"
 		"AbilityCooldown" "60.0"
 		"AbilityManaCost" "100"
-		
+
 		//Item Qualities
 		"ItemIsNeutralDrop" "1"
 		"Model" "models/props_gameplay/neutral_box.vmdl"
 	}
-	
+
 	"item_cigar"
 	{
 		"ID" "1105"
 		"BaseClass" "item_lua"
 		"ScriptFile" "lua_items/cigar/cigar.lua"
-		"AbilityTextureName" "item_magic_wand"
-		
-		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		
-		"AbilityCooldown" ".25"
-		"AbilityManaCost" "5"
-		
+		"AbilityTextureName" "item_cigar"
+
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
+		"AbilityCooldown" "1"
+		"AbilityManaCost" "0"
+
 		//Item Qualities
 		"ItemIsNeutralDrop" "1"
 		"Model" "models/props_gameplay/neutral_box.vmdl"
-		
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -383,29 +383,54 @@
 				"var_type" "FIELD_FLOAT"
 				"mana" "2.5"
 			}
+			"03"
+			{
+				"var_type" "FIELD_INTEGER"
+				"block" "30"
+			}
+			"04"
+			{
+				"var_type" "FIELD_FLOAT"
+				"duration" ".5"
+			}
+			"05"
+			{
+				"var_type" "FIELD_INTEGER"
+				"charges" "25"
+			}
+			"06"
+			{
+				"var_type" "FIELD_INTEGER"
+				"charges_per_kill" "10"
+			}
+			"07"
+			{
+				"var_type" "FIELD_INTEGER"
+				"percent_movespeed" "20"
+			}
 		}
 	}
-	
+
 	"item_divine_focus"
 	{
 		"ID" "1106"
 		"BaseClass" "item_lua"
 		"ScriptFile" "lua_items/divine_focus/divine_focus.lua"
 		"AbilityTextureName" "item_rapier"
-		
+
 		"Model" "models/divine_focus/divine_focus_tilted.vmdl"
 
 
 		"ItemCost" "6000"
 		"ItemSellable" "0"
 		"ItemKillable" "0"
-		
+
 		"AllowedInBackpack" "0"
-		
+
 		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
+
 		"ItemShareability" "ITEM_FULLY_SHAREABLE"
-		
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -415,7 +440,7 @@
 			}
 		}
 	}
-	
+
 	"item_rune_dice"
 	{
 		"ID" "1107"
@@ -427,17 +452,17 @@
 		"ItemCost" "0"
 		"ItemSellable" "0"
 		"ItemKillable" "0"
-		
+
 		"AllowedInBackpack" "0"
-		
+
 		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_RUNE_TARGET"
-		
+
 		"ItemShareability" "ITEM_FULLY_SHAREABLE"
-		
+
 		//Item Qualities
 		"ItemIsNeutralDrop" "1"
 		"Model" "models/props_gameplay/neutral_box.vmdl"
-		
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -447,7 +472,7 @@
 			}
 		}
 	}
-	
+
 	"item_ticket"
 	{
 		"ID" "1108"
@@ -457,11 +482,11 @@
 
 		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityType" "DOTA_ABILITY_BASIC"
-		
+
 		//Item Qualities
 		"ItemIsNeutralDrop" "1"
 		"Model" "models/props_gameplay/neutral_box.vmdl"
-		
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -478,6 +503,84 @@
 			{
 				"var_type" "FIELD_INTEGER"
 				"death_cost" "-100"
+			}
+		}
+	}
+	"item_grenade_cache"
+	{
+		"ID" "1109"
+		"BaseClass" "item_lua"
+		"ScriptFile" "lua_items/grenade_cache/grenade_cache.lua"
+		"AbilityTextureName" "item_grenade_cache"
+
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityType" "DOTA_ABILITY_BASIC"
+		
+		"AbilityCooldown" "1.0"
+		"AbilityCastRange" "250"
+		"AbilityChannelTime" ".9"
+		"AbilityCastPoint" "0.1"
+
+		//Item Qualities
+		"ItemIsNeutralDrop" "1"
+		"Model" "models/props_gameplay/neutral_box.vmdl"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type" "FIELD_INTEGER"
+				"status_resist_percentage" "5"
+			}
+			"02"
+			{
+				"var_type" "FIELD_INTEGER"
+				"respawn_time" "10"
+			}
+			"03"
+			{
+				"var_type" "FIELD_INTEGER"
+				"death_cost" "-100"
+			}
+		}
+	}
+	
+	"item_grenade_flashbang"
+	{
+		"ID" "1110"
+		"BaseClass" "item_lua"
+		"ScriptFile" "lua_items/grenade_cache/grenade_cache.lua"
+		"AbilityTextureName" "item_grenade_flashbang"
+
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityType" "DOTA_ABILITY_BASIC"
+		
+		"AoERadius" "250"
+		"AbilityCooldown" "1.0"
+		"AbilityCastRange" "1200"
+		"AbilityCastPoint" "0.1"
+
+		//Item Qualities
+		"ItemIsNeutralDrop" "0"
+		"ItemPermanent" "0"
+		"Model" "models/props_gameplay/mango.vmdl"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type" "FIELD_INTEGER"
+				"radius" "250"
+			}
+			"02"
+			{
+				"var_type" "FIELD_INTEGER"
+				"blind_miss_chance" "50"
+			}
+			"03"
+			{
+				"var_type" "FIELD_INTEGER"
+				"status_resist_percentage" "5"
 			}
 		}
 	}

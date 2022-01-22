@@ -2,34 +2,33 @@ LinkLuaModifier("modifier_minecart_knockback", "minecart", LUA_MODIFIER_MOTION_H
 LinkLuaModifier("modifier_minecart_ride", "minecart", LUA_MODIFIER_MOTION_HORIZONTAL)
 
 minecart = class({})
-  minecart.ent = Entities:FindByName(nil,"minecart_mover") --or Entities:FindByName(nil,"minecart")
+  minecart.ent = Entities:FindByName(nil,"minecart_mover")
+  -- minecart.vis = Entities:FindByName(nil,"minecart")
+  -- minecart.relay = Entities:FindByName(nil, "relay_minecart_tp_start")
 
 function hit(trigger)
+  minecart.ent = Entities:FindByName(nil,"minecart_mover") --or Entities:FindByName(nil,"minecart")
+  minecart.vis = Entities:FindByName(nil,"minecart")
+  minecart.relay = Entities:FindByName(nil, "relay_minecart_tp_start")
+  local unit = trigger.activator
 
-  local ent = trigger.activator
+  if unit == nil then return end
 
-  if ent == nil then return end
-
-  if not ent:HasItemInInventory("item_ticket") then
+  if not unit:HasItemInInventory("item_ticket") then
     local damage = minecart.ent:GetVelocity():Length()
     local iDuration = damage / 333
 
     --Apply Knockback
-    ent:AddNewModifier(nil, nil, "modifier_minecart_knockback", {duration = iDuration})
+    unit:AddNewModifier(nil, nil, "modifier_minecart_knockback", {duration = iDuration})
 
     --Apply Damage
     local damageInfo = CreateDamageInfo(minecart.ent, minecart.ent, minecart.ent:GetAbsOrigin(), minecart.ent:GetAbsOrigin(), damage, DAMAGE_TYPE_PHYSICAL)
-    ent:TakeDamage(damageInfo)
+    unit:TakeDamage(damageInfo)
 
     DestroyDamageInfo(damageInfo)
   else
-    ent:AddNewModifier(nil,nil, "modifier_minecart_ride", {duration = 5})
+    unit:AddNewModifier(nil, nil, "modifier_minecart_ride", {duration = -1})
   end
-end
-
-function disembark(trigger)
-  local ent = trigger.activator
-  ent:RemoveModifierByName("modifier_minecart_ride")
 end
 
 modifier_minecart_knockback = class({})
@@ -88,6 +87,7 @@ modifier_minecart_ride = class({})
 function modifier_minecart_ride:DeclareFunctions()
   local funcs = {
     MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+    MODIFIER_EVENT_ON_ORDER
   }
   return funcs
 end
@@ -106,4 +106,20 @@ end
 
 function modifier_minecart_ride:UpdateHorizontalMotion(me, dt)
     me:SetOrigin(minecart.ent:GetAbsOrigin())
+end
+
+function modifier_minecart_ride:OnOrder(event)
+
+  print(ONUNITMOVED)
+  print(event.unit)
+
+  if not event.unit == self:GetParent() then return end
+
+  print(ONUNITMOVED)
+  print(event.unit)
+
+  if event.order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION then
+    event.unit:RemoveModifierByName("modifier_minecart_ride")
+  end
+
 end

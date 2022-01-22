@@ -18,24 +18,30 @@
 		{
 			"item_friend_wand_lua" "1" //Custom Lua -- Datadriven version is broken
 			"item_sacrifice_ring" "1" //Custom Lua
-			"item_ticket" //Custom Lua
+			"item_ticket" "1"//Custom Lua
+			"item_cigar" "1" //Custom Lua
+			"item_smudged_scroll" "1" //Custom Lua
+			"item_stinger" "1" //Custom Lua
+			"item_hawk_glove" "1" //Custom Lua
+
 			
-			"item_arcane_ring" "1" //Replaced by sacrifice ring
-			"item_broom_handle" "1"
-			"item_chipped_vest" "1"
+			
+			//"item_arcane_ring" "1" //Replaced by sacrifice ring
+			//"item_broom_handle" "1"
+			//"item_chipped_vest" "1"
 			//"item_faded_brooch" "1" //Removed
 			//"item_iron_talon" "1" //Removed
 			//"item_ironwood_tree" "1" //Removed
-			"item_keen_optic" "1"
+			//"item_keen_optic" "1"
 			//"item_mango_tree" "1" //Removed
-			"item_mysterious_hat" "1" //Fairy's Trinket
-			"item_ocean_heart" "1"
-			"item_pogo_stick" "1" //Tumbler's Toy
+			//"item_mysterious_hat" "1" //Fairy's Trinket
+			//"item_ocean_heart" "1"
+			//"item_pogo_stick" "1" //Tumbler's Toy
 			//"item_poor_mans_shield" "1" //Removed
-			"item_possessed_mask" "1"
+			//"item_possessed_mask" "1"
 			//"item_royal_jelly" "1" //Removed
-			"item_trusty_shovel" "1"
-			"item_unstable_wand" "1" //Pig Pole
+			//"item_trusty_shovel" "1"
+			//"item_unstable_wand" "1" //Pig Pole
 			
 		}
 	}
@@ -43,7 +49,7 @@
 	{
 		"drop_rates"
 		{
-			"14:00"
+			"17:00"
 			{
 				"0" "10"
 				"1" "10"
@@ -56,8 +62,7 @@
 		"items"
 		{
 			"item_tree_wall" "1" //Custom Lua
-			"item_stinger" "1" //Custom Lua
-			"item_hawk_glove" "1" //Custom Lua
+			 //Custom Lua
 			
 			"item_ring_of_aquila"			  "1"
 			//"item_imp_claw"					  "1"
@@ -78,7 +83,7 @@
 	{
 		"drop_rates"
 		{
-			"21:00"
+			"27:00"
 			{
 				"0" "10"
 				"1" "10"
@@ -109,7 +114,7 @@
 	{	
 		"drop_rates"
 		{
-			"28:00"
+			"37:00"
 			{
 				"0" "10"
 				"1" "10"
@@ -141,7 +146,7 @@
 	{
 		"drop_rates"
 		{
-			"45:00"
+			"60:00"
 			{
 				"0" "10"
 				"1" "10"
@@ -153,20 +158,20 @@
 
 		"items"
 		{
-			"item_rapier" "1"
+			
 			"item_force_boots"				  "1"
 			"item_desolator_2"				  "1"
 			"item_seer_stone"				  "1"
-			"item_mirror_shield"			  	  "1"
-			"item_apex"					  "1"
+			"item_mirror_shield"			  "1"
+			"item_apex"					  	  "1"
 			//"item_ballista"					  "1"
 			"item_demonicon"				  "1"
 			"item_fallen_sky"		  	  "1"
-			"item_force_field"				  "1"
+			//"item_force_field"				  "1" //Removed
 			"item_pirate_hat"				  "1"
 			"item_ex_machina"				  "1"
 			"item_giants_ring"				  "1"
-			//"item_vengeances_shadow"				  "1"
+			//"item_vengeances_shadow"				  "1" //Removed
 			"item_book_of_shadows"			  "1"
 			
 		}

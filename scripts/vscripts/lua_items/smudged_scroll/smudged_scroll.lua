@@ -72,3 +72,6 @@ function item_smudged_scroll:SpawnUnits()
     CreateUnitByName(str, caster:GetAbsOrigin() + caster:GetForwardVector() * 100, true, nil, nil, DOTA_TEAM_NEUTRALS)
   end
 end
+
+modifier_item_smudged_scroll = class({})
+function modifier_item_smudged_scroll:IsHidden() return true end

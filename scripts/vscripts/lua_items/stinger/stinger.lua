@@ -11,7 +11,7 @@ end
 function item_stinger:Sting(caster, source, target)
   local damage = self:GetSpecialValueFor("base_damage") + charges * self:GetSpecialValueFor("charge_damage")
   --Draw Particle
-  local pfx = ParticleManager:CreateParticle("particles/items_fx/dagon.vpcf", PATTACH_POINT_FOLLOW, caster)
+  local pfx = ParticleManager:CreateParticle("particles/items/stinger/stinger.vpcf", PATTACH_POINT_FOLLOW, caster)
   ParticleManager:SetParticleControlEnt(pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_attack1", caster:GetAbsOrigin(), true)
   ParticleManager:SetParticleControlEnt(pfx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
   ParticleManager:SetParticleControl(pfx, 2, Vector(damage, 0, 0))

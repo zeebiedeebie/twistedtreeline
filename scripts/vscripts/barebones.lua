@@ -281,11 +281,12 @@ function GameMode:OnHeroInGame(hero)
 	-- These lines will create an item and add it to the player, effectively ensuring they start with the item
 	--local item = CreateItem("item_example_item", hero, hero)
 	--hero:AddItem(item)
-	local maxCouriers = 6
-	local currCouriers = 0
-	if hero:GetTeam() == DOTA_TEAM_GOODGUYS and currCouriers <= maxCouriers then
+	--local maxCouriers = 6
+	--local currCouriers = 0
+	--and currCouriers <= maxCouriers
+	if hero:GetTeam() == DOTA_TEAM_GOODGUYS then
 		hero.player:SpawnCourierAtPosition(Vector(-7808,0,416))
-	elseif hero:GetTeam() == DOTA_TEAM_BADGUYS and currCouriers <= maxCouriers then
+	elseif hero:GetTeam() == DOTA_TEAM_BADGUYS then
 		hero.player:SpawnCourierAtPosition(Vector(7808,0,416)) end
 end
 
