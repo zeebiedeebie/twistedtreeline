@@ -22,7 +22,7 @@
 			"item_cigar" "1" //Custom Lua
 			"item_smudged_scroll" "1" //Custom Lua
 			"item_stinger" "1" //Custom Lua
-			"item_hawk_glove" "1" //Custom Lua
+			
 
 			
 			
@@ -61,8 +61,8 @@
 
 		"items"
 		{
+			"item_hawk_glove" "1" //Custom Lua
 			"item_tree_wall" "1" //Custom Lua
-			 //Custom Lua
 			
 			"item_ring_of_aquila"			  "1"
 			//"item_imp_claw"					  "1"

@@ -45,8 +45,9 @@ function Precache( context )
 	PrecacheUnitByNameSync("npc_dota_hero_enigma", context)
 
 	--Custom Items
-	--stinger
-	PrecacheResource("particle","particles/item/dagon/dagon.vpcf", context)
+	--smudged scroll
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts", context)
+
 end
 
 -- Create the game mode when we activate

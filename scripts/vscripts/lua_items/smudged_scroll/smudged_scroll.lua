@@ -1,3 +1,4 @@
+--Tooltip for this should be extensive, but feature garbled text that obscures the function of some effects.
 LinkLuaModifier("modifier_item_smudged_scroll", "lua_items/smudged_scroll/smudged_scroll", LUA_MODIFIER_MOTION_NONE)
 if item_smudged_scroll == nil then item_smudged_scroll = class({}) end
 
@@ -6,12 +7,12 @@ function item_smudged_scroll:GetIntrinsicModifierName()
 end
 
 function item_smudged_scroll:OnSpellStart()
-  local caster = self:GetCaster()
+
   self:RandomEffect()
 end
 
 function item_smudged_scroll:RandomEffect()
-    local iRand = RandomInt(1,4)
+    local iRand = RandomInt(1,5)
 
     self:GetCaster():ModifyGold(iRand, false, DOTA_ModifyGold_AbilityGold)
     SendOverheadEventMessage(self:GetCaster():GetPlayerOwner(), OVERHEAD_ALERT_GOLD, self:GetCaster(), iRand, self:GetCaster():GetPlayerOwner())
@@ -20,6 +21,7 @@ function item_smudged_scroll:RandomEffect()
     elseif iRand == 2  then self:RandomHeal()
     elseif iRand == 3 then self:RandomRunes()
     elseif iRand == 4 then self:SpawnUnits()
+    elseif iRand == 5 then self:Thunderstorm()
     end
 end
 
@@ -32,7 +34,7 @@ function item_smudged_scroll:RandomBlink()
   FindClearSpaceForUnit(caster, newPos, true)
   --Particle Effect
   local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_teleport_flash_trails.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster())
-  ParticleManager:SetParticleControlForward(pfx, 0, self:GetCaster():GetAbsOrigin())
+  ParticleManager:SetParticleControlEnt(pfx, 0, self:GetCaster(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", Vector(0,0,0), false )
   ParticleManager:ReleaseParticleIndex(pfx)
 end
 
@@ -70,6 +72,44 @@ function item_smudged_scroll:SpawnUnits()
     local str = ""
     str = units[randUnit]
     CreateUnitByName(str, caster:GetAbsOrigin() + caster:GetForwardVector() * 100, true, nil, nil, DOTA_TEAM_NEUTRALS)
+  end
+end
+
+function item_smudged_scroll:Thunderstorm()
+  --Find All Units in Radius
+  local victims = FindUnitsInRadius(
+    self:GetCaster():GetTeamNumber(),
+    self:GetCaster():GetAbsOrigin(),
+    nil,
+    1200,
+    DOTA_UNIT_TARGET_TEAM_BOTH,
+    DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP + DOTA_UNIT_TARGET_COURIER,
+    DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES,
+    FIND_ANY_ORDER,
+    false
+  )
+
+  for k,victim in pairs(victims) do
+    --Play vfx
+    local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_lightning_bolt.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster())
+    ParticleManager:SetParticleControlEnt(pfx, 1, victim, PATTACH_POINT_FOLLOW, "attach_hitloc", Vector(0,0,0), false)
+    ParticleManager:ReleaseParticleIndex(pfx)
+
+    --Play sound
+    EmitSoundOn("Hero_Zuus.LightningBolt", victim)
+
+    --Destroy Trees
+    GridNav:DestroyTreesAroundPoint(victim:GetAbsOrigin(), 250, true)
+
+    --Deal damage
+    ApplyDamage({
+      victim = victim,
+      attacker = self:GetCaster(),
+      damage = 250,
+      damage_type = DAMAGE_TYPE_MAGICAL,
+      DOTA_DAMAGE_FLAG_NONE,
+      ability = self,
+    })
   end
 end
 
