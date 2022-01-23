@@ -161,3 +161,10 @@ end
 
 modifier_item_smudged_scroll = class({})
 function modifier_item_smudged_scroll:IsHidden() return true end
+
+function modifier_item_smudged_scroll:DeclareFunctions()
+  funcs = {
+
+  }
+  return funcs
+end
