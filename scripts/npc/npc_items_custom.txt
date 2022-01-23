@@ -88,6 +88,7 @@
 		"AbilityCooldown" "15.0"
 		"AbilityChannelTime" ".9"
 		"AbilityCastPoint" "0.1"
+		"AoERadius" "600"
 
 		"AbilityTextureName" "item_friend_wand"
 		"AbilitySpecial"
@@ -100,12 +101,12 @@
 
 			"02"
 			{
-				"var_type" "FIELD_INTEGER"
-				"health_regen" "5"
+				"var_type" "FIELD_FLOAT"
+				"health_regen" "2.5"
 			}
 			"03"
 			{
-				"var_type" "FIELD_INTEGER"
+				"var_type" "FIELD_FLOAT"
 				"aura_radius" "600"
 			}
 			"04"
@@ -117,6 +118,11 @@
 			{
 				"var_type" "FIELD_INTEGER"
 				"spawn_radius" "200"
+			}
+			"06"
+			{
+				"var_type" "FIELD_FLOAT"
+				"aura_health_regen" "2.5"
 			}
 		}
 	}
@@ -418,7 +424,7 @@
 		"ScriptFile" "lua_items/divine_focus/divine_focus.lua"
 		"AbilityTextureName" "item_rapier"
 
-		"Model" "models/divine_focus/divine_focus_tilted.vmdl"
+		"Model" "models/divine_focus/divine_focus.vmdl"
 
 
 		"ItemCost" "6000"

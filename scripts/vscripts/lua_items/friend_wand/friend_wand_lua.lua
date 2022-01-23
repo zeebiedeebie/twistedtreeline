@@ -12,6 +12,19 @@ function item_friend_wand_lua:OnSpellStart()
   caster = self:GetCaster()
   caster:EmitSound("DOTA_Item.Necronomicon.Activate")
   caster:StartGesture(ACT_DOTA_GENERIC_CHANNEL_1)
+
+  -- local friends = FindUnitsInRadius(
+  --   self:GetCaster():GetTeamNumber(),
+  --   self:GetCaster():GetAbsOrigin(),
+  --   nil,
+  --   self:GetSpecialValueFor("aura_radius"),
+  --   DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+  --   DOTA_UNIT_TARGET_CREEP,
+  --   DOTA_UNIT_TARGET_FLAG_NONE,
+  --   FIND_ANY_ORDER,
+  --   false
+  -- )
+  -- DeepPrintTable(friends)
 end
 
 function item_friend_wand_lua:OnChannelFinish(interrupted)
@@ -51,17 +64,92 @@ function modifier_item_friend_wand:DeclareFunctions()
   return funcs
 end
 
+
 function modifier_item_friend_wand:GetModifierConstantHealthRegen()
   return self:GetAbility():GetSpecialValueFor("health_regen")
 end
 
+function modifier_item_friend_wand:OnCreated()
+  if IsServer() then
+    if not self:GetAbility() then self:Destroy()
+     end
+   end
+
+  if IsServer() then
+    self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_friend_wand_aura", {})
+  end
+
+  self:StartIntervalThink(0.25)
+
+end
+
+function modifier_item_friend_wand:OnDestroy()
+  if IsServer() then
+    if self:GetCaster():HasModifier("modifier_item_friend_wand_aura") then
+        self:GetCaster():RemoveModifierByName("modifier_item_friend_wand_aura")
+      end
+    end
+end
+
+function modifier_item_friend_wand:OnIntervalThink()
+  local friends = FindUnitsInRadius(
+    self:GetParent():GetTeamNumber(),
+    self:GetParent():GetAbsOrigin(),
+    nil,
+    self:GetAbility():GetSpecialValueFor("aura_radius"),
+    DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+    DOTA_UNIT_TARGET_CREEP,
+    DOTA_UNIT_TARGET_FLAG_NONE,
+    FIND_ANY_ORDER,
+    false
+  )
+
+  for i, friend in pairs(friends) do
+    print(i)
+    print ("--")
+    print(friend)
+    friend:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_item_friend_wand_aura_buff",{duration = 0.25})
+  end
+end
+
 --Actual Aura
 modifier_item_friend_wand_aura = class({})
-function modifier_item_friend_wand:IsBuff() return true end
-function modifier_item_friend_wand:IsAura() return true end
-function modifier_item_friend_wand:GetAuraRadius() return self:GetAbility():GetSpecialValueFor("aura_radius") end
+function modifier_item_friend_wand_aura:IsHidden() return false end
+function modifier_item_friend_wand_aura:IsBuff() return true end
 
---Aura Applied Modifier
+function modifier_item_friend_wand_aura:DeclareFunctions()
+  funcs = {}
+  return funcs
+end
+
+function modifier_item_friend_wand_aura:IsAura() return true end
+function modifier_item_friend_wand_aura:IsAuraActiveOnDeath() return false end
+function modifier_item_friend_wand_aura:GetAuraRadius() return self:GetAbility():GetSpecialValueFor("aura_radius") end
+function modifier_item_friend_wand_aura:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_NONE end
+function modifier_item_friend_wand_aura:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_ALLY end
+function modifier_item_friend_wand_aura:GetAuraSearchType() return DOTA_UNIT_TARGET_ALL end
+function modifier_item_friend_wand_aura:GetModifierAura() return "modifier_item_friend_wand_aura_buff" end
+
+
+
+--Aura Applied buff
 modifier_item_friend_wand_aura_buff = class({})
 function modifier_item_friend_wand_aura_buff:IsBuff() return true end
 function modifier_item_friend_wand_aura_buff:IsHidden() return false end
+function modifier_item_friend_wand_aura_buff:IsPurgable() return false end
+function modifier_item_friend_wand_aura_buff:RemoveOnDeath() return true end
+
+function modifier_item_friend_wand_aura_buff:OnCreated()
+  print("friend wand aura buff created")
+end
+
+
+function modifier_item_friend_wand_aura_buff:DeclareFunctions()
+  funcs = {
+    MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+  }
+  return funcs
+end
+function modifier_item_friend_wand_aura_buff:GetModifierConstantHealthRegen()
+  return self:GetAbility():GetSpecialValueFor("aura_health_regen")
+end
