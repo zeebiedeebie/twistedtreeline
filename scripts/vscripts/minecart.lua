@@ -18,7 +18,7 @@ function hit(trigger)
     unit:AddNewModifier(nil, nil, "modifier_minecart_ride", {duration = -1})
   else
     local damage = minecart.ent:GetVelocity():Length() / 2
-    local iDuration = damage / 10
+    local iDuration = damage / 100
 
     --Apply Knockback
     unit:AddNewModifier(nil, nil, "modifier_minecart_knockback", {duration = iDuration})

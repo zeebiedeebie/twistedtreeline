@@ -3,9 +3,12 @@
 	HideInTools = false
 	IsPlayable = true
 	IsTemplate = false
-	maps = [  ]
+	maps = 
+	[
+		"twistedtreeline",
+	]
 	CheckAFKPlayers = false
-	DefaultMap = ""
+	DefaultMap = "twistedtreeline"
 	Default_Keys = [  ]
 	DisableIK = false
 	EnablePickRules = false
