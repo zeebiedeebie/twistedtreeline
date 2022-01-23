@@ -12,7 +12,7 @@ function item_smudged_scroll:OnSpellStart()
 end
 
 function item_smudged_scroll:RandomEffect()
-    local iRand = RandomInt(1,5)
+    local iRand = RandomInt(1,1)
 
     self:GetCaster():ModifyGold(iRand, false, DOTA_ModifyGold_AbilityGold)
     SendOverheadEventMessage(self:GetCaster():GetPlayerOwner(), OVERHEAD_ALERT_GOLD, self:GetCaster(), iRand, self:GetCaster():GetPlayerOwner())
@@ -30,12 +30,22 @@ function item_smudged_scroll:RandomBlink()
   local vRand = RandomVector(RandomInt(1,1200)) --hardcoded blink distance
   local newPos = caster:GetAbsOrigin() + vRand
 
+  --Particle Effect
+  local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_teleport_flash_trails.vpcf", PATTACH_POINT_FOLLOW, caster)
+  ParticleManager:SetParticleControl(pfx, 0, caster:GetAbsOrigin())
+  ParticleManager:ReleaseParticleIndex(pfx)
+
+  local pfx2 = ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_teleport_flash_trails.vpcf", PATTACH_POINT_FOLLOW, caster)
+  ParticleManager:SetParticleControlEnt(pfx2, 0, caster, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", Vector(0,0,0), false )
+  ParticleManager:ReleaseParticleIndex(pfx2)
+  --sfx
+  EmitSoundOn("Hero_Antimage.Blink_in", caster)
+
   --Blink
   FindClearSpaceForUnit(caster, newPos, true)
-  --Particle Effect
-  local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_teleport_flash_trails.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster())
-  ParticleManager:SetParticleControlEnt(pfx, 0, self:GetCaster(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", Vector(0,0,0), false )
-  ParticleManager:ReleaseParticleIndex(pfx)
+
+  --post-blink sfx
+  EmitSoundOn("Hero_Antimage.Blink_out", caster)
 end
 
 function item_smudged_scroll:RandomHeal()

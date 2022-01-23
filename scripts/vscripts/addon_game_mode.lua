@@ -47,6 +47,7 @@ function Precache( context )
 	--Custom Items
 	--smudged scroll
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts", context)
 
 end
 
