@@ -2,17 +2,28 @@
 LinkLuaModifier("modifier_item_smudged_scroll", "lua_items/smudged_scroll/smudged_scroll", LUA_MODIFIER_MOTION_NONE)
 if item_smudged_scroll == nil then item_smudged_scroll = class({}) end
 
+local prev = -1
+
 function item_smudged_scroll:GetIntrinsicModifierName()
   return  "modifier_item_smudged_scroll"
 end
 
 function item_smudged_scroll:OnSpellStart()
-
   self:RandomEffect()
 end
 
+function item_smudged_scroll:NovelRandomInt(min, max, prev)
+  --base case prevents crash
+  if min == max then return min end
+
+  local iRand = RandomInt(min,max)
+  if prev ~= iRand then return iRand
+  else return self:NovelRandomInt(min, max, prev)
+  end
+end
+
 function item_smudged_scroll:RandomEffect()
-    local iRand = RandomInt(1,1)
+    local iRand = self:NovelRandomInt(1,6, prev)
 
     self:GetCaster():ModifyGold(iRand, false, DOTA_ModifyGold_AbilityGold)
     SendOverheadEventMessage(self:GetCaster():GetPlayerOwner(), OVERHEAD_ALERT_GOLD, self:GetCaster(), iRand, self:GetCaster():GetPlayerOwner())
@@ -22,10 +33,15 @@ function item_smudged_scroll:RandomEffect()
     elseif iRand == 3 then self:RandomRunes()
     elseif iRand == 4 then self:SpawnUnits()
     elseif iRand == 5 then self:Thunderstorm()
+    elseif iRand == 6 then self:AreaAttack()
+    elseif iRand == 0 then self:RandomEffect()
     end
+
+    prev = iRand
 end
 
 function item_smudged_scroll:RandomBlink()
+  --Teleports the caster to a random point within the radius
   local caster = self:GetCaster()
   local vRand = RandomVector(RandomInt(1,1200)) --hardcoded blink distance
   local newPos = caster:GetAbsOrigin() + vRand
@@ -49,6 +65,7 @@ function item_smudged_scroll:RandomBlink()
 end
 
 function item_smudged_scroll:RandomHeal()
+  --Heals the caster for a random amount
   local caster = self:GetCaster()
   local player = caster:GetPlayerOwner()
   local iRand = RandomInt(1,1000) --Hardcoded max heal value
@@ -70,6 +87,7 @@ function item_smudged_scroll:RandomRunes()
 end
 
 function item_smudged_scroll:SpawnUnits()
+  --Creates a bunch of units in front of the caster.
   local caster = self:GetCaster()
   local units = {
     "npc_dota_neutral_kobold",
@@ -86,7 +104,7 @@ function item_smudged_scroll:SpawnUnits()
 end
 
 function item_smudged_scroll:Thunderstorm()
-  --Find All Units in Radius
+  --Hit all units in radius with a damaging lightning bolt
   local victims = FindUnitsInRadius(
     self:GetCaster():GetTeamNumber(),
     self:GetCaster():GetAbsOrigin(),
@@ -120,6 +138,24 @@ function item_smudged_scroll:Thunderstorm()
       DOTA_DAMAGE_FLAG_NONE,
       ability = self,
     })
+  end
+end
+
+function item_smudged_scroll:AreaAttack()
+  --Attack all enemies in a radius
+  local victims = FindUnitsInRadius(
+    self:GetCaster():GetTeamNumber(),
+    self:GetCaster():GetAbsOrigin(),
+    nil,
+    1200,
+    DOTA_UNIT_TARGET_TEAM_ENEMY,
+    DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP + DOTA_UNIT_TARGET_COURIER,
+    DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE,
+    FIND_ANY_ORDER,
+    false
+  )
+  for k,victim in pairs(victims) do
+    self:GetCaster():PerformAttack(victim, true, true, true, true, true, false, true)
   end
 end
 

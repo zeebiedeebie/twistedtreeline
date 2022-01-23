@@ -14,9 +14,11 @@ function hit(trigger)
 
   if unit == nil then return end
 
-  if not unit:HasModifier("modifier_item_ticket") then
-    local damage = minecart.ent:GetVelocity():Length()
-    local iDuration = damage / 333
+  if unit:HasModifier("modifier_item_ticket") then
+    unit:AddNewModifier(nil, nil, "modifier_minecart_ride", {duration = -1})
+  else
+    local damage = minecart.ent:GetVelocity():Length() / 2
+    local iDuration = damage / 10
 
     --Apply Knockback
     unit:AddNewModifier(nil, nil, "modifier_minecart_knockback", {duration = iDuration})
@@ -27,10 +29,7 @@ function hit(trigger)
     --Apply Damage
     local damageInfo = CreateDamageInfo(minecart.ent, minecart.ent, minecart.ent:GetAbsOrigin(), minecart.ent:GetAbsOrigin(), damage, DAMAGE_TYPE_PHYSICAL)
     unit:TakeDamage(damageInfo)
-
     DestroyDamageInfo(damageInfo)
-  else
-    unit:AddNewModifier(nil, nil, "modifier_minecart_ride", {duration = -1})
   end
 end
 
