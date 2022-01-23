@@ -32,7 +32,7 @@ function item_cigar:OnSpellStart()
   self:SetCurrentCharges(puffsRemaining)
 
   --Permanent cloud of smoke on player head per puff. Might get funny / bad performance. Fix someday.
-  self:PlayEffect()
+  --self:PlayEffect()
 end
 
 function item_cigar:PlayEffect()
@@ -61,17 +61,19 @@ function modifier_item_cigar:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE 
 
 function modifier_item_cigar:DeclareFunctions()
   funcs = {
-    MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
-    MODIFIER_EVENT_ON_HERO_KILLED
+    MODIFIER_EVENT_ON_HERO_KILLED,
+    MODIFIER_PROPERTY_STATUS_RESISTANCE,
   }
   return funcs
 end
-function modifier_item_cigar:GetModifierPercentageCooldown()
-  return 50
-end
+
 function modifier_item_cigar:OnHeroKilled(params)
   if params.attacker == self:GetParent() then return end
   self:GetAbility():SetCurrentCharges(self:GetAbility():GetCurrentCharges() + self:GetAbility():GetSpecialValueFor("charges_per_kill"))
+end
+
+function modifier_item_cigar:GetModifierStatusResistance()
+  return self:GetAbility():GetSpecialValueFor("status_resistance")
 end
 
 

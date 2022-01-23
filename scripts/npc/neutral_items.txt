@@ -30,16 +30,16 @@
 			//"item_broom_handle" "1"
 			//"item_chipped_vest" "1"
 			//"item_faded_brooch" "1" //Removed
-			//"item_iron_talon" "1" //Removed
+			"item_iron_talon" "1" //Removed
 			//"item_ironwood_tree" "1" //Removed
 			//"item_keen_optic" "1"
-			//"item_mango_tree" "1" //Removed
+			"item_mango_tree" "1" //Removed
 			//"item_mysterious_hat" "1" //Fairy's Trinket
 			//"item_ocean_heart" "1"
-			//"item_pogo_stick" "1" //Tumbler's Toy
+			"item_pogo_stick" "1" //Tumbler's Toy
 			//"item_poor_mans_shield" "1" //Removed
 			//"item_possessed_mask" "1"
-			//"item_royal_jelly" "1" //Removed
+			"item_royal_jelly" "1" //Removed
 			//"item_trusty_shovel" "1"
 			//"item_unstable_wand" "1" //Pig Pole
 			
@@ -69,11 +69,11 @@
 			"item_nether_shawl"				  "1"
 			"item_dragon_scale"				  "1"
 			"item_pupils_gift"				  "1"
-			"item_vambrace"			  "1"
+			//"item_vambrace"			  "1"
 			"item_misericorde"				  "1"
 			"item_grove_bow"				  "1"
 			"item_philosophers_stone"				  "1"
-			"item_essence_ring"				  "1"
+			//"item_essence_ring"				  "1"
 			"item_paintball"				"1"
 			"item_bullwhip"			  "1"
 			"item_quicksilver_amulet"				  "1"
