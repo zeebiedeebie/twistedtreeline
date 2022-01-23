@@ -8,7 +8,7 @@ ALLOW_SAME_HERO_SELECTION = true        -- Should we let people select the same 
 HERO_SELECTION_TIME = 45.0              -- How long should we let people select their hero?
 PRE_GAME_TIME = 45.0                    -- How long after people select their heroes should the horn blow and the game start?
 POST_GAME_TIME = 60.0                   -- How long should we let people look at the scoreboard before closing the server automatically?
-TREE_REGROW_TIME = 60.0                 -- How long should it take individual trees to respawn after being cut down/destroyed?
+TREE_REGROW_TIME = 180.0                 -- How long should it take individual trees to respawn after being cut down/destroyed?
 
 GOLD_PER_TICK = 1                     -- How much gold should players get per tick?
 GOLD_TICK_TIME = 0.6                     -- How long should we wait in seconds between gold ticks?
@@ -40,7 +40,7 @@ END_GAME_ON_KILLS = false                -- Should the game end after a certain 
 KILLS_TO_END_GAME_FOR_TEAM = 50         -- How many kills for a team should signify an end of game?
 
 USE_CUSTOM_HERO_LEVELS = false           -- Should we allow heroes to have custom levels?
-MAX_LEVEL = 50                          -- What level should we let heroes get to?
+MAX_LEVEL = 30                          -- What level should we let heroes get to?
 USE_CUSTOM_XP_VALUES = false             -- Should we use custom XP values to level up heroes, or the default Dota numbers?
 
 -- Fill this table up with the required XP per level if you want to change it
@@ -77,15 +77,14 @@ function GameMode:InitGameMode()
 	GameRules:SetHeroMinimapIconScale( MINIMAP_ICON_SIZE )
 	GameRules:SetCreepMinimapIconScale( MINIMAP_CREEP_ICON_SIZE )
 	GameRules:SetRuneMinimapIconScale( MINIMAP_RUNE_ICON_SIZE )
-
 --Doesn't work
 	--local newEnt = SpawnUnitFromTableSynchronous('trigger_shop', {origin = Entities:FindAllByTarget("origin"), shoptype = 1, model = newEnt:GetModelName()})
  --How to set these?
-	-- DOTA_DEFAULT_MAX_TEAM = 3
-	-- DOTA_DEFAULT_MAX_TEAM_PLAYERS = 6
+	--DOTALIMITS_t.DOTA_DEFAULT_MAX_TEAM = 3
+	--DOTALIMITS_t.DOTA_DEFAULT_MAX_TEAM_PLAYERS = 6
 	--
-	-- DOTA_MAX_TEAM = 3
-	-- DOTA_MAX_TEAM_PLAYERS = 6
+	--DOTALIMITS_t.DOTA_MAX_TEAM = 3
+	--DOTALIMITS_t.DOTA_MAX_TEAM_PLAYERS = 6
 
 
 	print('[BAREBONES] GameRules set')
@@ -205,6 +204,8 @@ function GameMode:CaptureGameMode()
 		mode:SetGoldSoundDisabled( DISABLE_GOLD_SOUNDS )
 		mode:SetRemoveIllusionsOnDeath( REMOVE_ILLUSIONS_ON_DEATH )
 
+		mode:SetFreeCourierModeEnabled(true)
+
 		self:OnFirstPlayerLoaded()
 	end
 end
@@ -281,13 +282,14 @@ function GameMode:OnHeroInGame(hero)
 	-- These lines will create an item and add it to the player, effectively ensuring they start with the item
 	--local item = CreateItem("item_example_item", hero, hero)
 	--hero:AddItem(item)
-	--local maxCouriers = 6
-	--local currCouriers = 0
-	--and currCouriers <= maxCouriers
-	if hero:GetTeam() == DOTA_TEAM_GOODGUYS then
-		hero.player:SpawnCourierAtPosition(Vector(-7808,0,416))
-	elseif hero:GetTeam() == DOTA_TEAM_BADGUYS then
-		hero.player:SpawnCourierAtPosition(Vector(7808,0,416)) end
+
+	-- if hero:GetTeam() == DOTA_TEAM_GOODGUYS then
+	-- 	hero.player:SpawnCourierAtPosition(Vector(-7808,0,416))
+	-- elseif hero:GetTeam() == DOTA_TEAM_BADGUYS then
+	-- 	hero.player:SpawnCourierAtPosition(Vector(7808,0,416)) end
+
+	--Spawn couriers
+	hero.player:CheckForCourierSpawning(hero)
 end
 
 --[[
