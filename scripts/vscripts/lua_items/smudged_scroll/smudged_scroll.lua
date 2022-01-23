@@ -43,7 +43,7 @@ end
 function item_smudged_scroll:RandomBlink()
   --Teleports the caster to a random point within the radius
   local caster = self:GetCaster()
-  local vRand = RandomVector(RandomInt(1,1200)) --hardcoded blink distance
+  local vRand = RandomVector(RandomInt(self:GetSpecialValueFor("blink_radius_min"),self:GetSpecialValueFor("blink_radius_max")))
   local newPos = caster:GetAbsOrigin() + vRand
 
   --Particle Effect
@@ -79,7 +79,7 @@ end
 function item_smudged_scroll:RandomRunes()
   --Creates a random rune for each hero within the search radius.
   local caster = self:GetCaster()
-  local searchRadius = 1200 --Hardcoded search radius
+  local searchRadius = self:GetSpecialValueFor("rune_aoe")
   local heroes = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, caster:GetAbsOrigin(), nil, searchRadius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, true)
   for i, hero in pairs(heroes) do
     CreateRune(hero:GetAbsOrigin() + hero:GetForwardVector() * 100, RandomInt(0,7))
@@ -95,7 +95,8 @@ function item_smudged_scroll:SpawnUnits()
     "npc_dota_neutral_wildkin",
   }
 
-  for i = 2, 6 do
+  local numUnits = RandomInt(self:GetSpecialValueFor("neutrals_min"), self:GetSpecialValueFor("neutrals_max"))
+  for i = 0, numUnits do
     local randUnit = RandomInt(1, 3) --2nd arg must be length of units table (how to do this in lua?)
     local str = ""
     str = units[randUnit]
@@ -109,7 +110,7 @@ function item_smudged_scroll:Thunderstorm()
     self:GetCaster():GetTeamNumber(),
     self:GetCaster():GetAbsOrigin(),
     nil,
-    1200,
+    self:GetSpecialValueFor("bolt_range"),
     DOTA_UNIT_TARGET_TEAM_BOTH,
     DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP + DOTA_UNIT_TARGET_COURIER,
     DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES,
@@ -133,7 +134,7 @@ function item_smudged_scroll:Thunderstorm()
     ApplyDamage({
       victim = victim,
       attacker = self:GetCaster(),
-      damage = 250,
+      damage = self:GetSpecialValueFor("bolt_damage"),
       damage_type = DAMAGE_TYPE_MAGICAL,
       DOTA_DAMAGE_FLAG_NONE,
       ability = self,
@@ -147,7 +148,7 @@ function item_smudged_scroll:AreaAttack()
     self:GetCaster():GetTeamNumber(),
     self:GetCaster():GetAbsOrigin(),
     nil,
-    1200,
+    self:GetSpecialValueFor("instant_attack_range"),
     DOTA_UNIT_TARGET_TEAM_ENEMY,
     DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP + DOTA_UNIT_TARGET_COURIER,
     DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE,
@@ -164,7 +165,21 @@ function modifier_item_smudged_scroll:IsHidden() return true end
 
 function modifier_item_smudged_scroll:DeclareFunctions()
   funcs = {
-
+    MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
+    MODIFIER_PROPERTY_HEALTH_BONUS,
+    MODIFIER_PROPERTY_EXP_RATE_BOOST
   }
   return funcs
+end
+
+function modifier_item_smudged_scroll:GetModifierPercentageExpRateBoost()
+  return self:GetAbility():GetSpecialValueFor("percent_exp_bonus")
+end
+
+function modifier_item_smudged_scroll:GetModifierHealthBonus()
+  return self:GetAbility():GetSpecialValueFor("hp_bonus")
+end
+
+function modifier_item_smudged_scroll:GetModifierConstantManaRegen()
+  return self:GetAbility():GetSpecialValueFor("mana_regen_bonus")
 end

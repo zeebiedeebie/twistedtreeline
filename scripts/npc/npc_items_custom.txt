@@ -354,7 +354,7 @@
 
 		"AbilityCastPoint" "0.0"
 		"AbilityCooldown" "60.0"
-		"AbilityManaCost" "100"
+		"AbilityManaCost" "75"
 
 		//Item Qualities
 		"ItemIsNeutralDrop" "1"
@@ -365,6 +365,75 @@
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts"
 			"particle"	"particles/units/heroes/hero_zuus/zuus_lightning_bolt.vpcf"
 		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type" "FIELD_FLOAT"
+				"percent_exp_bonus" "5"
+			}
+			"02"
+			{
+				"var_type" "FIELD_INTEGER"
+				"hp_bonus" "50"
+			}
+			"03"
+			{
+				"var_type" "FIELD_FLOAT"
+				"mana_regen_bonus" "1.5"
+			}
+			"04"
+			{
+				"var_type" "FIELD_INTEGER"
+				"blink_radius_min" "100"
+			}
+			"05"
+			{
+				"var_type" "FIELD_INTEGER"
+				"blink_radius_max" "1200"
+			}
+			"06"
+			{
+				"var_type" "FIELD_INTEGER"
+				"heal_min" "1"
+			}
+			"07"
+			{
+				"var_type" "FIELD_INTEGER"
+				"heal_max" "1000"
+			}
+			"08"
+			{
+				"var_type" "FIELD_INTEGER"
+				"rune_aoe" "1200"
+			}
+			"09"
+			{
+				"var_type" "FIELD_INTEGER"
+				"neutrals_min" "2"
+			}
+			"10"
+			{
+				"var_type" "FIELD_INTEGER"
+				"neutrals_max" "6"
+			}
+			"11"
+			{
+				"var_type" "FIELD_INTEGER"
+				"bolt_range" "1200"
+			}
+			"12"
+			{
+				"var_type" "FIELD_INTEGER"
+				"bolt_damage" "250"
+			}
+			"13"
+			{
+				"var_type" "FIELD_INTEGER"
+				"instant_attack_range" "1200"
+			}
+		}
+		
 	}
 
 	"item_cigar"
