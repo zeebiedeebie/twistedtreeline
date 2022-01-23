@@ -14,12 +14,15 @@ function hit(trigger)
 
   if unit == nil then return end
 
-  if not unit:HasItemInInventory("item_ticket") then
+  if not unit:HasModifier("modifier_item_ticket") then
     local damage = minecart.ent:GetVelocity():Length()
     local iDuration = damage / 333
 
     --Apply Knockback
     unit:AddNewModifier(nil, nil, "modifier_minecart_knockback", {duration = iDuration})
+
+    --Emit Sound
+    EmitSoundOn("DOTA_Item.SkullBasher", unit)
 
     --Apply Damage
     local damageInfo = CreateDamageInfo(minecart.ent, minecart.ent, minecart.ent:GetAbsOrigin(), minecart.ent:GetAbsOrigin(), damage, DAMAGE_TYPE_PHYSICAL)

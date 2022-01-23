@@ -5,6 +5,12 @@ function item_ticket:GetIntrinsicModifierName()
   return "modifier_item_ticket"
 end
 
+function item_ticket:OnSpellStart()
+  local relay = Entities:FindByName(nil, "relay_minecart_ticket")
+  relay:Trigger(self:GetCaster(),self:GetCaster())
+  EmitSoundOn("DOTA_Item.SkullBasher", self:GetCaster())
+end
+
 modifier_item_ticket = class({})
 function modifier_item_ticket:IsHidden() return true end
 function modifier_item_ticket:IsPurgable() return false end

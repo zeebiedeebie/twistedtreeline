@@ -486,7 +486,8 @@
 		"ScriptFile" "lua_items/ticket/ticket.lua"
 		"AbilityTextureName" "item_ticket"
 
-		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityCooldown" "30"
 		"AbilityType" "DOTA_ABILITY_BASIC"
 
 		//Item Qualities
