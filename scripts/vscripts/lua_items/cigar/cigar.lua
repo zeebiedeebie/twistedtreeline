@@ -68,7 +68,7 @@ function modifier_item_cigar:DeclareFunctions()
 end
 
 function modifier_item_cigar:OnHeroKilled(params)
-  if params.attacker == self:GetParent() then return end
+  if params.attacker ~= self:GetParent() then return end
   self:GetAbility():SetCurrentCharges(self:GetAbility():GetCurrentCharges() + self:GetAbility():GetSpecialValueFor("charges_per_kill"))
 end
 

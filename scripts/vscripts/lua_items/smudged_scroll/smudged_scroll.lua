@@ -23,7 +23,7 @@ function item_smudged_scroll:NovelRandomInt(min, max, prev)
 end
 
 function item_smudged_scroll:RandomEffect()
-    local iRand = self:NovelRandomInt(6,6, prev)
+    local iRand = self:NovelRandomInt(1,6, prev)
 
     self:GetCaster():ModifyGold(iRand, false, DOTA_ModifyGold_AbilityGold)
     SendOverheadEventMessage(self:GetCaster():GetPlayerOwner(), OVERHEAD_ALERT_GOLD, self:GetCaster(), iRand, self:GetCaster():GetPlayerOwner())

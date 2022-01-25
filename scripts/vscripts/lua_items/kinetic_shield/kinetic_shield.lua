@@ -12,11 +12,11 @@ end
 
 function item_kinetic_shield:OnSpellStart()
   local caster = self:GetCaster()
-
 end
 
 function item_kinetic_shield:Repel()
-  local caster = self:GetCaster()
+  self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_item_kinetic_shield_ethereal", {duration = 5})
+  self:GetCaster():EmitSound("DOTA_Item.EtherealBlade.Target")
 end
 
 modifier_item_kinetic_shield = class({})
@@ -48,21 +48,18 @@ function modifier_item_kinetic_shield:OnTakeDamage(keys)
       local damage = keys.original_damage
       damage = damage + self:GetCaster():GetModifierStackCount("modifier_item_kinetic_shield", self:GetCaster())
       self:GetCaster():SetModifierStackCount("modifier_item_kinetic_shield", self:GetCaster(), damage)
-
     end
   end
 end
 
-function modifier_item_kinetic_shield:OnAttack(keys)
+function modifier_item_kinetic_shield:OnAttacked(keys)
 
   if not IsServer() then return end
 
-  if keys.attacker == self:GetCaster() then
+  if keys.target == self:GetCaster() then
     if self:GetCaster():GetModifierStackCount("modifier_item_kinetic_shield", self:GetCaster()) > 50 then
-
-      self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_item_kinetic_shield_ethereal", {})
-
-      self:GetCaster():EmitSound("DOTA_Item.EtherealBlade.Target")
+      self:GetAbility():Repel()
+      self:GetCaster():SetModifierStackCount("modifier_item_kinetic_shield", self:GetCaster(), 0)
     end
   end
 end
@@ -72,7 +69,7 @@ function modifier_item_kinetic_shield:GetModifierMoveSpeedBonus_Constant()
 end
 
 --Ethereal Modifier
-if modifier_item_kinetic_shield_ethereal == nil then modifier_item_kinetic_shield_ethereal = class({}) end
+modifier_item_kinetic_shield_ethereal = class({})
 
 function modifier_item_kinetic_shield_ethereal:IsHidden() return false end
 function modifier_item_kinetic_shield_ethereal:IsPurgable() return true end

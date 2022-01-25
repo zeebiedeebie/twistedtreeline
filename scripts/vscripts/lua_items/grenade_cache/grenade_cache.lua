@@ -38,7 +38,6 @@ item_grenade_flashbang = class({})
 
 function item_grenade_flashbang:OnSpellStart()
   self:ThrowGrenade()
-  self:PlayGrenadeVisual()
 end
 
 function item_grenade_flashbang:ThrowGrenade()
@@ -48,7 +47,7 @@ function item_grenade_flashbang:ThrowGrenade()
     Ability = self,
     --EffectName = effectname,
     vSpawnOrigin = caster:GetAbsOrigin(),
-    fDistance = 1200,
+    fDistance = (self:GetCursorPosition() - self:GetAbsOrigin()):Length(),
     fStartRadius = 64,
     fEndRadius = 64,
     Source = caster,
@@ -65,14 +64,15 @@ function item_grenade_flashbang:ThrowGrenade()
     iVisionTeamNumber = caster:GetTeamNumber()
     }
     projectile = ProjectileManager:CreateLinearProjectile(options)
+    self:PlayGrenadeVisual(projectile)
 end
 
-function item_grenade_flashbang:PlayGrenadeVisual()
-  local vel = Vector(1028,-1,0)
+function item_grenade_flashbang:PlayGrenadeVisual(projectile)
 
   pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_sniper/sniper_shard_concussive_grenade_model.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
   ParticleManager:SetParticleControlEnt(pfx, 0, self:GetCaster(), PATTACH_POINT, "attach_attack1", self:GetCaster():GetAbsOrigin(), true)
-  ParticleManager:SetParticleControl(pfx, 1, vel)
+  ParticleManager:SetParticleControl(pfx, 1, ProjectileManager:GetLinearProjectileLocation(projectile))
+  ParticleManager:SetParticleControl(pfx, 3, ProjectileManager:GetLinearProjectileVelocity(projectile))
   ParticleManager:SetParticleControl(pfx, 5, self:GetCursorPosition())
 
 
